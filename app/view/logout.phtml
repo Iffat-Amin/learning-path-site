@@ -1,0 +1,14 @@
+
+<?php include 'header.phtml' ?>
+
+<?php
+    if (!isset($_SESSION)) {
+        echo "Successfully logged out!";
+    }
+    else {
+        echo "could not log out";
+    }
+
+?>
+
+<?php include 'footer.phtml' ?>

@@ -1,0 +1,26 @@
+<?php include 'header.phtml' ?>
+
+<div class="form-container">
+  <div class="glass-morphism">
+    <div class="auth-container">
+      <div class="form">
+        <h2 class="voyage">Sign Up</h2>
+        
+        <form action="" method="POST">
+        <input name="name" type="text" placeholder="Full Name">
+          <input name="email" type="email" placeholder="Email">
+          <input name="password" type="password" placeholder="Password">
+          <p id="response"><?= empty($this->data['response']) ? 'Registration Successful!' : $this->data['response'] ?></p>
+          <button name="register" value="Register" type="submit">Sign Up</button>
+        </form>
+      </div>
+      
+      <div class="switch">
+        <span>Already have an account?</span>
+        <a href="?page=login">Sign In</a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<?php include 'footer.phtml' ?>

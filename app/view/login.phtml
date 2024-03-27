@@ -1,0 +1,27 @@
+<?php include 'header.phtml' ?>
+
+ <!--Form for login -->
+ <div class="form-container">
+  <div class="glass-morphism">
+    <div class="auth-container">
+      <div class="form">
+        <h2 class="voyage">Sign In</h2>
+        
+        <form action="" method="POST">
+          <input name="email" type="text" placeholder="Email">
+          <input name="password" type="password" placeholder="Password">
+          <p id="response"><?= $this->data['response'] ?></p>
+          <button name="login" value="Log-In" type="submit">Sign In</button>
+        </form>
+      </div>
+      <div class="switch">
+        <span>Don't have an account?</span>
+        <a href="?page=register">Sign Up</a>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!--footer-->
+<?php include 'footer.phtml' ?>

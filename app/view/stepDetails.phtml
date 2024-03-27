@@ -1,0 +1,64 @@
+<?php
+  $action = $_GET['page'];
+  $step = null;
+  if (isset($_GET['step'])) {
+    foreach ($this->data['steps'] as $resource) {
+      if ($resource['step_num'] == $_GET['step'])
+        $step = $resource;
+    }
+  }
+?>
+
+<?php include 'header.phtml' ?>
+
+<!-- addStep -->
+<main class="container bg-light py-4">
+  <div class="card" style="margin-bottom: 20px;">
+    <h5 class="card-header voyage">Add Step</h5>
+    <div class="card-body">
+      <form action="" method="POST">
+        <div class="mb-3">
+          <label for="title" class="form-label voyage">Title</label>
+          <?= $action=='editStep' ? '<input name="name" type="text" value="' . $step['name'] . '" class="form-control" id="title" placeholder="Enter title">' : '<input name="name" type="text" class="form-control" id="title" placeholder="Enter title">' ?>
+        </div>
+        <div class="mb-3">
+          <label for="resourceType" class="form-label voyage">Resource Type</label>
+          <select name="resourceType" class="form-select" id="resourceType">
+            <option name="resourceType" value="" selected>Select resource type</option>
+            <option name="resourceType" value="video">Video</option>
+            <option name="resourceType" value="article">Article</option>
+            <option name="resourceType" value="book">E-Book</option>
+          </select>
+        </div>
+        <div class="mb-3">
+          <label for="link" class="form-label voyage">Resource Link</label>
+          <?= $action=='editStep' ? '<input name="link" value="' . $step['link'] . '" type="text" class="form-control" id="link" placeholder="Enter Link to Resource">' : '<input name="link" type="text" class="form-control" id="link" placeholder="Enter Link to Resource">' ?>
+        </div>
+        <div class="mb-3">
+          <label for="description" class="form-label voyage">Description (optional)</label>
+          <?= $action=='editStep' && isset($step['description']) ? '<textarea name="description" class="form-control" id="description" rows="3" placeholder="Enter description here...">' . $step['description'] . '</textarea>'  : '<textarea name="description" class="form-control" id="description" rows="3" placeholder="Enter description here..."></textarea>' ?>
+
+        </div>
+      <?= $action=='editStep' ? '<button name="submit" value="Edit Step" type="submit" class="btn btn-success btn-sm voyage"style="background-color: black;">Edit Step</button>' : '<button name="submit" value="Add Step" type="submit" class="btn btn-success btn-sm voyage"style="background-color: black;">Add Step</button>' ?> 
+        <!-- <button type="button" class="btn btn-danger btn-sm voyage"style="background-color: black;">Delete Step</button> -->
+      </form>
+      <div class="container">
+        <p id="response"><?php
+          if ($action=='editStep' && isset($_POST['submit']))
+            if (empty($this->data['response']))
+              echo 'Step edited successfully!';
+            else
+              echo $this->data['response'];
+          else if ($action=='addStep' && isset($_POST['submit'])){
+            if (empty($this->data['response']))
+              echo 'Step added successfully!';
+              else
+               echo $this->data['response'];
+          } ?></p>
+      </div>
+    </div>
+  </div>
+</main>
+
+<!--footer-->
+<?php include 'footer.phtml' ?>

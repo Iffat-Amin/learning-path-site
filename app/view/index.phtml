@@ -1,0 +1,77 @@
+<?php include 'header.phtml' ?>
+<?php 
+    function createCategoryTag($category) {
+        echo '<div class="col-md-4"><div class="card" style="width: 18rem;"><img src="https://i.imgur.com/ZTkt4I5.jpg" class="card-img-top" alt="..."><div class="card-body">';
+        echo '<h5 class="card-title">' . $category['name'] . '</h5><h6 class="card-subtitle mb-2 text-muted">This category contains all paths of '. $category['name'] .'</h6>';
+        echo '<a href="?page=paths&category=' . $category['id'] . '" class="btn btn-secondary mr-2">Paths</a>';
+        echo '</div></div></div>';
+    }
+?>
+
+<div id="carouselExampleCaptions" class="carousel slide" data-bs-ride="carousel">
+  <div class="carousel-indicators">
+    <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
+    <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="1" aria-label="Slide 2"></button>
+    <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="2" aria-label="Slide 3"></button>
+    <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="3" aria-label="Slide 4"></button>
+    <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="4" aria-label="Slide 5"></button>
+  </div>
+  <div class="carousel-inner">
+    <div class="carousel-item active">
+      <div class="carousel-caption ">
+        <h5 class="animated fade-in-down" style="animation-delay: 1s">Personalized <span>Learning Paths</span></h5>
+        <p class="animated fade-in-up" style="animation-delay:2s"> Allow users to set their learning goals and interests. Then, recommend or create personalized learning paths tailored to their preferences and proficiency levels. </p>
+      </div>
+    </div>
+    <div class="carousel-item">
+      <img src="..." class="d-block w-100" alt="...">
+      <div class="carousel-caption ">
+        <h5 class="animated fadeInDown" style="animation-delay:1s">Interactive <span>Course</span></h5>
+        <p class="animated fadeInUp" style="animation-delay:2s">Offer engaging course materials such as videos, quizzes, interactive exercises, and simulations to enhance learning experiences. </p>
+      </div>
+    </div>
+    <div class="carousel-item">
+      <img src="..." class="d-block w-100" alt="...">
+      <div class="carousel-caption ">
+        <h5 class="animated fadeInDown" style="animation-delay:1s">Mobile App <span>Accessibility</span></h5>
+        <p class="animated fadeInUp" style="animation-delay:2s">Mobile app version of Learning Voyage to enable users to learn on-the-go, providing flexibility and convenience. </p>
+      </div>
+    </div>
+    <div class="carousel-item">
+      <img src="..." class="d-block w-100" alt="...">
+      <div class="carousel-caption ">
+        <h5 class="animated fadeInDown" style="animation-delay:1s">Feedback and <span>Rating System: </span></h5>
+        <p class="animated fadeInUp" style="animation-delay:2s">Allow users to provide feedback and ratings for courses,
+        helping others make informed decisions about their learning journey. </p>
+      </div>
+    </div>
+    <div class="carousel-item">
+      <img src="..." class="d-block w-100" alt="...">
+      <div class="carousel-caption ">
+        <h5 class="animated fadeInDown" style="animation-delay:1s">Career Path <span>Guidance</span></h5>
+        <p class="animated fadeInUp" style="animation-delay:2s">Offer resources or specialized courses tailored to specific career paths, helping users acquire skills relevant to their professional aspirations. </p>
+      </div>
+    </div>
+  </div>
+  <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide="prev">
+    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+    <span class="visually-hidden">Previous</span>
+  </button>
+  <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide="next">
+    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+    <span class="visually-hidden">Next</span>
+  </button>
+</div>
+<!-- course -->
+<div class="container mx-auto mt-4 bg-light">
+  <h2 class="voyage">Courses:</h2>
+  <div class="row">
+    <?php
+        foreach ($this->data['categories'] as $category) {
+            createCategoryTag($category);
+        }
+    ?>   
+  </div>
+</div>
+
+<?php include 'footer.phtml' ?>

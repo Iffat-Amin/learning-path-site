@@ -1,0 +1,49 @@
+<?php
+    function createResourceTag($path, $resource) {
+        echo '<div class="col-md-4"><div class="resource">';
+        echo '<h3>#' . $resource['step_num'] . ' - '. $resource['name'] . '</h3>';
+        echo '<p>' . $resource['description'] . '<br><a target="_blank" href="' . $resource['link'] . '">Go to resource</a></p>';
+        if (isset($_SESSION['USER']) && $_SESSION['USER'] == $path['author_email'])
+            echo '<a href="?page=editStep&path=' . $path['path_id'] . '&step=' . $resource['step_num'] . '" class="btn btn-primary btn-sm">Edit</a>';
+        echo '</div></div>';
+    }
+?>
+
+<?php include 'header.phtml' ?>
+<link rel="stylesheet" href="assets/css/pathDetail.css">
+<header class="py-5 text-center">
+  <div class="container">
+    <h1><?= $this->data['path']['title'] ?></h1>
+    <p><?= $this->data['path']['description'] ?? 'Explore our learning path to achieve your goals.' ?></p>
+  </div>
+</header>
+<form action="" method="POST">
+
+<main class="container">
+  <section class="learning-path py-4">
+    <div class="row">
+      <?php 
+        foreach ($this->data['resources'] as $resource) {
+            createResourceTag($this->data['path'], $resource);
+        }
+      ?>
+    <div class="text-center mt-3">
+    <div class="container">
+    <?php 
+        if (isset($_SESSION['USER']) && $_SESSION['USER'] == $this->data['path']['author_email'])
+            echo '<a href="?page=addStep&path='. $this->data['path']['path_id'] .'" class="btn btn-primary mx-4">Add more Steps</a>';
+        if (isset($_SESSION['USER'])) 
+            echo '<button type="submit" name="submit" value="Clone Path" class="btn btn-primary">Clone Path</button>';
+    ?>
+    </div>   
+    <br>
+    <p class="success"><?= isset($_POST['submit']) ? $this->data['response'] : '' ?></p>
+    
+    </div>
+  </section>
+  
+</main>
+</form>
+
+
+<?php include 'footer.phtml' ?>

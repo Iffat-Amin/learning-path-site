@@ -1,0 +1,83 @@
+<?php
+    $paths = $this->data['paths'] ?? null;
+    function getCategoryName($data) {
+        $categoryID = $_GET['category'] ?? -1;
+        if ($categoryID > 0) {
+            foreach ($data['categories'] as $category) {
+                if ($category['id'] == $categoryID) return 'Paths for ' . $category['name'];
+            }
+        }
+        else return "Invalid Category!";
+    }
+    function getAuthorName($data) {
+        $userID = $_GET['author'] ?? -1;
+        if ($userID > 0) {
+            foreach ($data['users'] as $user) {
+                if ($user['user_id'] == $userID) return 'Paths by ' . $user['name'];
+            }
+        }
+        else return "Invalid User!";
+    }
+    function getAction($data) {
+        if (isset($_GET['category'])) {
+            return getCategoryName($data);
+        }
+        else if(isset($_GET['author'])) {
+            return getAuthorName($data);
+        }
+        else {
+            return 'All Paths';
+        }
+    }
+    function createPathRow($path) {
+        $rating = intval($path['num_upvotes']) - intval($path['num_downvotes']);
+        echo '<th scope="row"><a href="?page=resources&path=' . $path['path_id'] . '">'. $path['title'] . '</a></th>';
+        echo '<td>'. $path['author_name'] . '</td>';
+        echo '<td>'.$path['last_updated'].'</td>';
+        
+        echo '<td><div class="rating"><button class="up" style="background-color: green;color: white;"><i class="fa-solid fa-arrow-up"></i></button>'.
+        '<span class="count" style="margin: 0 10px;font-size: 18px;font-weight: bold;">'.$rating.'</span>'.
+        '<button class="down" style="background-color: red;color: white;"><i class="fa-solid fa-arrow-down"></i></button></div></td>';
+        if (isset($_GET['author']) && isset($_SESSION['USER']) && $_SESSION['USER'] == $path['author_email']) {
+            echo '<td><button name="delete" value="' . $path['path_id'] . '" type="submit" class="btn btn-danger">Delete <i class="fas fa-trash-alt"></i></button></td>';
+        }
+        echo '</tr>';
+    }
+?>
+
+<?php include 'header.phtml' ?>
+
+<h2><?= getAction($this->data) ?></h2>
+<button class="btn btn-danger" style="margin:10px" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasWithBothOptions" aria-controls="offcanvasWithBothOptions" >Filter Paths</button>
+<div class="offcanvas offcanvas-start" data-bs-scroll="true" tabindex="-1" id="offcanvasWithBothOptions" aria-labelledby="offcanvasWithBothOptionsLabel">
+  <div class="offcanvas-header">
+    <h5 class="offcanvas-title" id="offcanvasWithBothOptionsLabel">Tags</h5>
+    <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+  </div>
+  <div class="offcanvas-body">
+  </div>
+</div>
+<!--path-table-->
+<div class="table-responsive">
+<form action="" method="POST">
+<table class="table table-success table-striped table-hover caption-top">
+  <thead>
+    <tr class="table table-danger">
+      <th scope="col">Title</th>
+      <th scope="col">Author</th>
+      <th scope="col">Last Update</th>
+      <th scope="col">Rating</th>
+      <?= isset($_GET['author']) ? '<th scope="col">Delete?</th>' : ''?>
+    </tr>
+  </thead>
+  <tbody>
+    <?php
+        foreach($this->data['paths'] as $path) {
+            createPathRow($path);
+        }
+    ?>    
+  </tbody>
+</table>
+</form>
+
+<?php include 'footer.phtml' ?>

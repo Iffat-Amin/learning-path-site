@@ -1,0 +1,58 @@
+<?php
+  function createJSArray($data) {
+    // let categories = {'category_name': [[topic_id, topic_name], [topic_id, topic_name]]};
+    $JSarr = 'let categories = {';
+    for ($i = 0; $i < count($data); $i++) {
+        $JSarr .= "'". $data[$i]['name'] . "': [";
+        for ($j = 0; $j < count($data[$i]['topics']); $j++) {
+          $JSarr .= "[" . $data[$i]['topics'][$j][0] . ',"' . $data[$i]['topics'][$j][1] . '"],';
+        }
+        $JSarr .= "],";
+      }
+    $JSarr .= '};';
+    return $JSarr;
+  }
+?>
+
+<?php include 'header.phtml' ?>
+<!-- addPath -->
+<main class="container bg-light py-4">
+  <div class="card" style="margin-bottom: 20px;">
+    <h5 class="card-header voyage">Add Path</h5>
+    <div class="card-body">
+      <form action="" method="POST">
+        <div class="mb-3">
+          <label for="title" class="form-label voyage">Title</label>
+          <input name="title" type="text" class="form-control" id="title" placeholder="Enter title">
+        </div>
+        <div class="mb-3">
+          <label for="category" class="form-label voyage">Category</label>
+          <select name="category" class="form-select" id="category">
+            <option name="category" value="-1" selected>Select category</option>
+            <?php 
+              foreach($this->data['categories'] as $category) {
+                echo '<option name="category" value="' . $category['id'] . '">' . $category['name'] . '</option>';
+              }
+            ?>
+          </select>
+        </div>
+        <div class="form-label">
+          <label class="form-label">Topics Covered</label><br>
+        </div>
+        <div class="mb-3" id="topics-covered">
+        </div>
+        <button name="submit" value="submit" type="submit" class="btn btn-primary voyage" style="background-color: black;">Create</button>
+      </form>
+      <br>
+      <div class="container">
+        <p id="response" class="h5"><?= empty($this->data['response']) && isset($_POST['submit']) ? 'Path Created Successfully!' : $this->data['response'] ?></p>
+      </div>
+    </div>
+  </div>
+</main>
+
+
+<!--footer-->
+<script src="assets/js/addPath.js"></script>
+<script><?= createJSArray($this->data['categories']) ?> </script>
+<?php include 'footer.phtml' ?>
